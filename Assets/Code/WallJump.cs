@@ -69,7 +69,6 @@ public class WallJump : MonoBehaviour
             {
                 if (contactPoint.normal.y == 1)
                 {
-                    Debug.Log("a");
                     playerMovement.ResetMovementDirection();
                 }
             }
