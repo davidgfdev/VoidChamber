@@ -47,8 +47,10 @@ public class WallJump : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collisionInfo)
     {
+
         if (!collisionInfo.gameObject.CompareTag("Player"))
         {
+
             isAbleToWallJump = CompareContactPoints(collisionInfo.contacts);
         }
     }
@@ -90,8 +92,9 @@ public class WallJump : MonoBehaviour
             float playerInversedSign = Mathf.Sign(0 - playerMovement.GetInputX());
             float normalSign = Mathf.Sign(normalX);
 
-            if (Mathf.Abs(normalX) == 1 && playerInversedSign == normalSign)
+            if (Mathf.Abs(normalX) > 0.8f && playerInversedSign == normalSign)
             {
+                Debug.Log("colliding");
                 isContact = true;
                 wallJumpNormal = contactPoint.normal;
             }

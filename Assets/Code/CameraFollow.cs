@@ -8,7 +8,7 @@ public class CameraFollow : MonoBehaviour
     private Vector2 target;
     private Vector3 velocity;
 
-    void Update()
+    void LateUpdate()
     {
         target = new Vector3(followGameObject.transform.position.x, followGameObject.transform.position.y, transform.position.z) + offset;
         transform.position = Vector3.SmoothDamp(transform.position, target, ref velocity, followSpeed * Time.deltaTime);

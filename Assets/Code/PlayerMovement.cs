@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed;
+    private float currentSpeed;
     private Rigidbody2D rigidBody;
     private int movementDirection = 1;
 
@@ -11,14 +12,32 @@ public class PlayerMovement : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
+    private void Start()
+    {
+        currentSpeed = speed;
+    }
+
     private void FixedUpdate()
     {
         MoveCharacter();
+        Flip();
     }
 
     private void MoveCharacter()
     {
-        rigidBody.velocity = new Vector2(GetInputX() * speed * Time.deltaTime, rigidBody.velocity.y);
+        rigidBody.velocity = new Vector2(GetInputX() * currentSpeed * Time.deltaTime, rigidBody.velocity.y);
+    }
+
+    private void Flip()
+    {
+        if (GetInputX() > 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        if (GetInputX() < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
     }
 
     public float GetInputX()
@@ -44,5 +63,15 @@ public class PlayerMovement : MonoBehaviour
     public void InverseMovementDirection()
     {
         movementDirection = -movementDirection;
+    }
+
+    public void Immobilize()
+    {
+        currentSpeed = 0;
+    }
+
+    public void ResetSpeed()
+    {
+        currentSpeed = speed;
     }
 }

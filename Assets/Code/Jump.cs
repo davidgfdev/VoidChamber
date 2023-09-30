@@ -86,4 +86,9 @@ public class Jump : MonoBehaviour
             isGrounded = false;
         }
     }
+
+    public bool GetIsGrounded()
+    {
+        return isGrounded;
+    }
 }
