@@ -76,5 +76,7 @@ public class ArtifactMovement : MonoBehaviour
                 rb.gravityScale = originalGravityScale;
             }
         }
+
+        player.GetComponent<Animator>().SetBool("Concentrating", isTravelling);
     }
 }

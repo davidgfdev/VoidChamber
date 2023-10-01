@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private void MoveCharacter()
     {
         rigidBody.velocity = new Vector2(GetInputX() * currentSpeed * Time.deltaTime, rigidBody.velocity.y);
+        GetComponent<Animator>().SetFloat("MoveX", rigidBody.velocity.normalized.sqrMagnitude);
     }
 
     private void Flip()

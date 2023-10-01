@@ -52,6 +52,7 @@ public class Jump : MonoBehaviour
         }
 
         currentBufferTime -= Time.deltaTime;
+        GetComponent<Animator>().SetBool("Falling", rigidBody.velocity.y < 0);
     }
 
     private void JumpUp()
@@ -61,6 +62,7 @@ public class Jump : MonoBehaviour
         rigidBody.AddForce(Vector2.up * jumpForce * 100 * Time.deltaTime);
         currentCoyoteJump = 0;
         currentBufferTime = 0;
+        GetComponent<Animator>().SetTrigger("Jump");
     }
 
     private void StopJump()
@@ -68,6 +70,15 @@ public class Jump : MonoBehaviour
         if (isGrounded == false && rigidBody.velocity.y > 0)
         {
             rigidBody.velocity = new Vector2(rigidBody.velocity.x * stopJumpX, rigidBody.velocity.y * stopJumpY);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.gameObject.CompareTag("Player"))
+        {
+            isGrounded = true;
+            GetComponent<Animator>().SetTrigger("Land");
         }
     }
 
