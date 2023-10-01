@@ -11,21 +11,23 @@ public class WallJump : MonoBehaviour
     private Vector2 wallJumpNormal;
     private Vector2 wallJumpTargetLocation;
     private PlayerMovement playerMovement;
-    private bool travelling = false;
+    private bool wallJumping = false;
+    private Rigidbody2D rb;
     private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-        if (travelling)
+        if (wallJumping)
         {
             transform.position = Vector2.MoveTowards(transform.position, wallJumpTargetLocation, travellingSpeed * Time.deltaTime);
             if (Vector2.Distance(transform.position, wallJumpTargetLocation) <= 0.1f)
             {
-                playerMovement.InverseMovementDirection();
-                travelling = false;
+                rb.gravityScale = 1;
+                wallJumping = false;
             }
         }
 
@@ -34,7 +36,7 @@ public class WallJump : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && playerMovement.GetVerticalSpeed() < 0.1f)
             {
                 wallJumpTargetLocation = new Vector2(transform.position.x + (wallJumpForce.x * Mathf.Sign(wallJumpNormal.x)), transform.position.y + wallJumpForce.y);
-                travelling = true;
+                wallJumping = true;
             }
 
             playerMovement.ApplyWallSpeed(wallSpeedMultiplier);
@@ -71,13 +73,13 @@ public class WallJump : MonoBehaviour
             {
                 if (contactPoint.normal.y == 1)
                 {
-                    playerMovement.ResetMovementDirection();
+                    rb.gravityScale = 3;
                 }
             }
-            if (travelling)
+            if (wallJumping)
             {
-                travelling = false;
-                playerMovement.InverseMovementDirection();
+                wallJumping = false;
+                rb.gravityScale = 1;
             }
         }
     }
