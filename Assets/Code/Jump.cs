@@ -52,7 +52,7 @@ public class Jump : MonoBehaviour
         }
 
         currentBufferTime -= Time.deltaTime;
-        GetComponent<Animator>().SetBool("Falling", rigidBody.velocity.y < 0);
+        GetComponent<Animator>().SetBool("Falling", rigidBody.velocity.y < -0.1);
     }
 
     private void JumpUp()

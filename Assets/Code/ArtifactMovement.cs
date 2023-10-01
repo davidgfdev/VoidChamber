@@ -31,6 +31,7 @@ public class ArtifactMovement : MonoBehaviour
 
     void Update()
     {
+        transform.position = new Vector3(transform.position.x, transform.position.y, player.transform.position.z);
         GoBackToPlayer();
         if (Input.GetKey(KeyCode.Q) && jump.GetIsGrounded())
         {
